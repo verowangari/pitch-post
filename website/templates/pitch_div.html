@@ -24,19 +24,11 @@
     <div class="card-text">
         {{pitch.text}}
 </div>
+<br>
 <!-- form -->
-<form
-class="input-group mb-3"
-method="POST"
-action="/create-comment/{{pitch.id}}"
->
+<form class="input-group mb-3"method="POST"action="/create-comment/{{pitch.id}}">
 <input
-  type="text"
-  id="text"
-  name="text"
-  class="form-control"
-  placeholder="Comment something!"
-/>
+  type="text" id="text"name="text"class="form-control"placeholder="Comment something!"/>
 <button type="submit" class="btn btn-primary">Comment</button>
 </form>
 <!-- form -->
