@@ -8,8 +8,9 @@ class User(db.Model,UserMixin): #Inherits from db model and userMixin
     username=db.Column(db.String(150),unique=True)
     password=db.Column(db.String(150))
     date_created=db.Column(db.DateTime(timezone=True),default=func.now()) #if nothing is passed,by default the column will be filled by the current time
-    pitch=db.relationship('Pitch', backref='user',passive_deletes=True)# backref to allow access to user model
-    
+    pitches=db.relationship('Pitch', backref='user',passive_deletes=True)# backref to allow access to user model
+    comments = db.relationship('Comment', backref='user', passive_deletes=True)
+
     
     
 class Pitch(db.Model):
@@ -17,3 +18,14 @@ class Pitch(db.Model):
     text=db.Column(db.Text,nullable=False)
     date_created=db.Column(db.DateTime(timezone=True),default=func.now())
     author =db.Column(db.Integer,db.ForeignKey('user.id',ondelete='CASCADE'),nullable=False)
+    comments = db.relationship('Comment', backref='pitch', passive_deletes=True)
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(200), nullable=False)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    author = db.Column(db.Integer, db.ForeignKey(
+        'user.id', ondelete="CASCADE"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey(
+        'pitch.id', ondelete="CASCADE"), nullable=False)
