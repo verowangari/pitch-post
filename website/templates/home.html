@@ -8,14 +8,16 @@
 <div class="card border-dark">
    <div class="card-header d-flex justify-content-between align-items-center">
 <a href="/pitches/{{pitch.user.username}}">{{pitch.user.username}}</a>
+{% if user.id == pitch.author %}
 <div class="btn-group">
 <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
     
 </button>
 <ul class="dropdown-menu">
-    <li><a href="" class="dropdown-item">Delete</a></li>
+    <li><a href="delete-pitch/{{pitch.id}}" class="dropdown-item">Delete</a></li>
 </ul>
 </div>
+{% endif %}
    </div>
 <div class="card-body">
     <div class="card-text">
@@ -26,6 +28,6 @@
     {{pitch.date_created}}
 </div>
 </div>
-{% endfor %}
-</div>
+<br >{% endfor %}
+  </div>
 {% endblock %}
