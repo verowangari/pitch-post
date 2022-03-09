@@ -23,8 +23,8 @@ def create_pitch():
         if not text:
             flash('This cannot be empty',category='error')
         else:
-            Pitch=Pitch(text=text,author=current_user.id)
-            db.session.add(Pitch)
+            pitch=Pitch(text=text,author=current_user.id)
+            db.session.add(pitch)
             db.session.commit()
             flash('Pitch Created!!',category='success')
     
