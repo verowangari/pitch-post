@@ -8,10 +8,12 @@ class User(db.Model,UserMixin): #Inherits from db model and userMixin
     username=db.Column(db.String(150),unique=True)
     password=db.Column(db.String(150))
     date_created=db.Column(db.DateTime(timezone=True),default=func.now()) #if nothing is passed,by default the column will be filled by the current time
-    pitch=db.relationship('Pitch', backref='user',passive_deletes=True)
+    pitch=db.relationship('Pitch', backref='user',passive_deletes=True)# backref to allow access to user model
     
-    class Pitch(db.Model):
-        id=db.Column(db.Integer,primary_key=True)
-        text=db.Column(db.Text,nullable=False)
-        date_created=db.Column(db.DateTime(timezone=True),default=func.now())
-        author =db.Column(db.Interger,db.ForeignKey('user.id',ondelete='CASCADE'),nullable=False)
+    
+    
+class Pitch(db.Model):
+    id=db.Column(db.Integer,primary_key=True)
+    text=db.Column(db.Text,nullable=False)
+    date_created=db.Column(db.DateTime(timezone=True),default=func.now())
+    author =db.Column(db.Interger,db.ForeignKey('user.id',ondelete='CASCADE'),nullable=False)
