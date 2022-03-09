@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,flash,redirect,url_for
 from flask_login import login_required, current_user
-from .models import Pitch
+from .models import Pitch,User
 from . import db
 
 views = Blueprint("views", __name__)
@@ -45,3 +45,14 @@ def delete_pitch(id):
         flash('Post deleted.', category='success')
 
     return redirect(url_for('views.home'))
+
+@views.route("/pitches/<username>")
+@login_required
+def pitches(username):
+    user=User.query.filter_by(username=username).first()
+    pitches=Pitch.query.filter_by(username=username).all()
+    if not user:
+        flash("User does not exist",category='error')
+        return redirect(url_for('views.home'))
+    
+    return render_template("pitch.html",user=current_user,pitches=pitches)
