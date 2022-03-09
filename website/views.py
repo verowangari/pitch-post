@@ -42,17 +42,18 @@ def delete_pitch(id):
     else:
         db.session.delete(pitch)
         db.session.commit()
-        flash('Post deleted.', category='success')
+        flash('Pitch deleted.', category='success')
 
     return redirect(url_for('views.home'))
 
 @views.route("/pitches/<username>")
 @login_required
 def pitches(username):
-    user=User.query.filter_by(username=username).first()
-    pitches=Pitch.query.filter_by(username=username).all()
+    user = User.query.filter_by(username=username).first()
+
     if not user:
-        flash("User does not exist",category='error')
+        flash('No user with that username exists.', category='error')
         return redirect(url_for('views.home'))
-    
-    return render_template("pitch.html",user=current_user,pitches=pitches)
+
+    pitches = Pitch.query.filter_by(author=user.id).all()
+    return render_template("pitch.html", user=current_user, pitches=pitches, username=username)

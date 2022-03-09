@@ -1,4 +1,8 @@
-{% extends "base.html" %} 
-{% block title %} Home{% endblock %}
-
-{% block content %} This is a test{% endblock %}
+{% extends "pitch_div.html" %} {% block title %}{{username}}'s Pitch{% endblock
+    %} {% block header %} {{username}}'s pitch {% endblock %} {% block footer %}
+    <div align="center">
+      <a href="/home"
+        ><button type="button" class="btn btn-primary btn-lg">Back</button></a
+      >
+    </div>
+    {% endblock %}
