@@ -9,3 +9,9 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     return render_template("home.html", user=current_user)
+
+@views.route("/create-pitch",methods=['GET','POST'])
+@login_required
+def create_pitch():
+    
+    return render_template(create_pitch.html,user=current_user)
