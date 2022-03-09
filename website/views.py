@@ -12,7 +12,8 @@ views = Blueprint("views", __name__)
 @views.route("/home")
 @login_required
 def home():
-    return render_template("home.html", user=current_user)
+    pitches=Pitch.query.all()
+    return render_template("home.html", user=current_user,pitches=pitches)
 
 @views.route("/create-pitch", methods=['GET', 'POST'])
 @login_required
@@ -27,5 +28,6 @@ def create_pitch():
             db.session.add(pitch)
             db.session.commit()
             flash('Pitch Created!!',category='success')
+        return redirect(url_for('views.home'))
     
     return render_template('create_pitch.html', user=current_user)
