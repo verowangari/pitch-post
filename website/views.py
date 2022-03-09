@@ -1,5 +1,3 @@
-from cgitb import text
-from unicodedata import category
 from flask import Blueprint, render_template,request,flash,redirect,url_for
 from flask_login import login_required, current_user
 from .models import Pitch
@@ -32,18 +30,18 @@ def create_pitch():
     
     return render_template('create_pitch.html', user=current_user)
 
-@views.route("delete-post/<id>")
+@views.route("/delete-pitch/<id>")
 @login_required
 def delete_pitch(id):
-    pitch=Pitch.query.filter_by(id=id)
-    
+    pitch = Pitch.query.filter_by(id=id).first()
+
     if not pitch:
-        flash("Pitch does not exist",category='error')
-    elif current_user.id !=pitch.id:
-        flash('you do not have permission to delete this pitch')
+        flash("Post does not exist.", category='error')
+    elif current_user.id != pitch.id:
+        flash('You do not have permission to delete this post.', category='error')
     else:
         db.session.delete(pitch)
         db.session.commit()
-        flash('Pitch deleted',category='success')
-        
+        flash('Post deleted.', category='success')
+
     return redirect(url_for('views.home'))
