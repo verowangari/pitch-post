@@ -9,7 +9,11 @@
 <div class="card border-dark">
    <div class="card-header d-flex justify-content-between align-items-center">
 <a href="/pitches/{{pitch.user.username}}">{{pitch.user.username}}</a>
-{% if user.id == pitch.author %}
+
+<div>
+    {{pitch.likes|length}}
+    <a href="/like-pitch/{{pitch.id}}"><i class="fa-solid fa-thumbs-up"></i></a>
+    {% if user.id == pitch.author %}
 <div class="btn-group">
 <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
     
@@ -19,11 +23,15 @@
 </ul>
 </div>
 {% endif %}
+</div>
+
    </div>
+   
 <div class="card-body">
     <div class="card-text">
         {{pitch.text}}
 </div>
+
 <br>
 <!-- comment display -->
 <div class="collapse" id="comments-{{pitch.id}}">
