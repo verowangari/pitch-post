@@ -10,7 +10,7 @@ class User(db.Model,UserMixin): #Inherits from db model and userMixin
     date_created=db.Column(db.DateTime(timezone=True),default=func.now()) #if nothing is passed,by default the column will be filled by the current time
     pitches=db.relationship('Pitch', backref='user',passive_deletes=True)# backref to allow access to user model
     comments = db.relationship('Comment', backref='user', passive_deletes=True)
-
+    likes = db.relationship('Like', backref='user', passive_deletes=True)
     
     
 class Pitch(db.Model):
@@ -19,7 +19,7 @@ class Pitch(db.Model):
     date_created=db.Column(db.DateTime(timezone=True),default=func.now())
     author =db.Column(db.Integer,db.ForeignKey('user.id',ondelete='CASCADE'),nullable=False)
     comments = db.relationship('Comment', backref='pitch', passive_deletes=True)
-
+    likes = db.relationship('Like', backref='pitch', passive_deletes=True)
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
