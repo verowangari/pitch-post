@@ -25,6 +25,9 @@
         {{pitch.text}}
 </div>
 <br>
+{% for comment in pitch.comments %}
+{{comment.text}} {% endfor %}
+
 <!-- form -->
 <form class="input-group mb-3"method="POST"action="/create-comment/{{pitch.id}}">
 <input
