@@ -30,3 +30,10 @@ class Comment(db.Model):
     pitch_id = db.Column(db.Integer, db.ForeignKey(
         'pitch.id', ondelete="CASCADE"), nullable=False)
     
+class Like(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    author = db.Column(db.Integer, db.ForeignKey(
+        'user.id', ondelete="CASCADE"), nullable=False)
+    pitch_id = db.Column(db.Integer, db.ForeignKey(
+        'pitch.id', ondelete="CASCADE"), nullable=False)
