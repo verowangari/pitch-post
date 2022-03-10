@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,flash,redirect,url_for
 from flask_login import login_required, current_user
-from .models import Pitch,User
+from .models import Pitch,User,Comment
 from . import db
 
 views = Blueprint("views", __name__)
@@ -57,3 +57,22 @@ def pitches(username):
 
     pitches=user.pitches
     return render_template("pitch.html", user=current_user, pitches=pitches, username=username)
+
+@views.route("/create-comment/<pitch_id>", methods=['POST'])
+@login_required
+def create_comment(pitch_id):
+    text = request.form.get('text')
+
+    if not text:
+        flash('Comment cannot be empty.', category='error')
+    else:
+        pitch = Pitch.query.filter_by(id=pitch_id)
+        if pitch:
+            comment = Comment(
+                text=text, author=current_user.id, pitch_id=pitch_id)
+            db.session.add(comment)
+            db.session.commit()
+        else:
+            flash('Post does not exist.', category='error')
+
+    return redirect(url_for('views.home'))
