@@ -93,20 +93,3 @@ def delete_comment(comment_id):
 
     return redirect(url_for('views.home'))
 
-@views.route("/like-pitch/<pitch_id>",methods=['GET'])
-@login_required
-def like(pitch_id):
-    pitch=Pitch.query.filter_by(id=pitch_id).first()
-    like=Like.query.filter_by(author=current_user.id,pitch_id=pitch_id).first()
-    
-    if not pitch:
-        flash('Pitch does not exist!',category='error')
-    elif like:
-        db.session.delete(like)
-        db.session.commit()
-    else:
-        like=Like.query.filter_by(author=current_user.id,pitch_id=pitch_id).first()
-        db.session.delete(like)
-        db.session.commit()
-    return redirect(url_for('views.home'))
-        
