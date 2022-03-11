@@ -1,104 +1,117 @@
-{% extends "base.html" %} 
-{% block title %} Home{% endblock %}
-
-{% block content %} 
-
-<h1 align="center" > {%  block header %} Pitches {% endblock %} </h1> 
-<div id="pitches"> 
-{% for pitch in pitches %}
-<div class="card border-dark">
-   <div class="card-header d-flex justify-content-between align-items-center">
-<a href="/pitches/{{pitch.user.username}}">{{pitch.user.username}}</a>
-
-<div>
-    {{pitch.likes|length}}
-    <a href="/like-pitch/{{pitch.id}}"><i class="fa-solid fa-thumbs-up"></i></a>
-    {% if user.id == pitch.author %}
-<div class="btn-group">
-<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-    
-</button>
-<ul class="dropdown-menu">
-    <li><a href="delete-pitch/{{pitch.id}}" class="dropdown-item">Delete</a></li>
-</ul>
-</div>
-{% endif %}
-</div>
-
-   </div>
-   
-<div class="card-body">
-    <div class="card-text">
-        {{pitch.text}}
-</div>
-
-<br>
-<!-- comment display -->
-<div class="collapse" id="comments-{{pitch.id}}">
-    <div class="card">
-      <div class="card-body" id="comments-expanded-{{pitch.id}}">
-        {% for comment in pitch.comments %}
-        <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <a href="/pitches/{{comment.user.username}}"
-              >{{comment.user.username}}</a
-            >: {{comment.text}}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+  %}
+  <h1 align="center">{% block header %}Pitches{% endblock %}</h1>
+  <div id="pitches">
+    {% for pitch in pitches %}
+    <div class="card border-dark">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <a href="/pitches/{{pitch.user.username}}">{{pitch.user.username}}</a>
+        <div>
+          <span id="likes-count-{{pitch.id}}">
+          {{ pitch.likes|length }}</span> 
+          {% if user.id in pitch.likes|map(attribute="author")|list %}
+          <i
+            class="fas fa-thumbs-up"
+            id="like-button-{{pitch.id}}"
+            onclick="like({{pitch.id}})"
+          ></i>
+          {% else %}
+          <i
+            class="far fa-thumbs-up"
+            id="like-button-{{pitch.id}}"
+            onclick="like({{pitch.id}})"
+          ></i>
+          {% endif %} {% if user.id == pitch.author %}
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-sm btn-primary dropdown-toggle"
+              data-bs-toggle="dropdown"
+            ></button>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/delete-pitch/{{pitch.id}}" class="dropdown-item"
+                  >Delete</a
+                >
+              </li>
+            </ul>
           </div>
-          <div>
-            <small class="text-muted"> {{comment.date_created}}</small>
-            {% if user.id == comment.author or user.id == pitch.author %}
-            <div class="btn-group"> 
-              <button
-                type="button"
-                class="btn btn-sm btn-primary dropdown-toggle"
-                data-bs-toggle="dropdown"
-              ></button>
-              <ul class="dropdown-menu">
-                <li>
-                  <a
-                    href="/delete-comment/{{comment.id}}"
-                    class="dropdown-item"
-                    >Delete</a
-                  >
-                </li>
-              </ul>
+          {% endif %}
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-text">{{pitch.text}}</div>
+        <br />
+        <div class="collapse" id="comments-{{pitch.id}}">
+          <div class="card">
+            <div class="card-body" id="comments-expanded-{{pitch.id}}">
+              {% for comment in pitch.comments %}
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <a href="/pitches/{{comment.user.username}}"
+                    >{{comment.user.username}}</a
+                  >: {{comment.text}}
+                </div>
+                <div>
+                  <small class="text-muted"> {{comment.date_created}}</small>
+                  {% if user.id == comment.author or user.id == pitch.author %}
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                    ></button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          href="/delete-comment/{{comment.id}}"
+                          class="dropdown-item"
+                          >Delete</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
             </div>
-            {% endif %}
           </div>
         </div>
-        {% endfor %}
+        <p class="card-text">
+          {% if pitch.comments|length > 0 %}
+          <a data-bs-toggle="collapse" href="#comments-{{pitch.id}}" role="button">
+            <small>View {{pitch.comments|length}} Comments</small>
+          </a>
+          {% else %}
+          <small class="text-muted">No Comments</small>
+          {% endif %}
+        </p>
+        <form
+          class="input-group mb-3"
+          method="POST"
+          action="/create-comment/{{pitch.id}}"
+        >
+          <input
+            type="text"
+            id="text"
+            name="text"
+            class="form-control"
+            placeholder="Comment something!"
+          />
+          <button type="submit" class="btn btn-primary">Comment</button>
+        </form>
       </div>
+      <div class="card-footer text-muted">{{pitch.date_created}}</div>
     </div>
+    <br/ > {% endfor %}
   </div>
-  <p class="card-text">
-    {% if pitch.comments|length > 0 %}
-    <a data-bs-toggle="collapse" href="#comments-{{pitch.id}}" role="button">
-      <small>View {{pitch.comments|length}} Comments</small>
-    </a>
-    {% else %}
-    <small class="text-muted">No Comments</small>
-    {% endif %}
-  </p>
-  
-<!-- comment display -->
-<!-- form -->
-<form class="input-group mb-3"method="POST"action="/create-comment/{{pitch.id}}">
-<input
-  type="text" id="text"name="text"class="form-control"placeholder="Comment something!"/>
-<button type="submit" class="btn btn-primary">Comment</button>
-</form>
-<!-- form -->
-</div>
-<div class="card-footer text-muted">
-    {{pitch.date_created}}
-</div>
-</div>
-<br >{% endfor %}
-</div>
- {% block footer %}
-<div align="center">
-<a href="/create-pitch">  <button class="btn btn-primary btn-lg" type="button"> Create a Pitch</button>  </a>
-</div>
-{% endblock %}
- 
-{% endblock %}
+  {% block footer %}
+  <div align="center">
+    <a href="/create-pitch"
+      ><button type="button" class="btn btn-primary btn-lg">
+        Create a Pitch
+      </button></a
+    >
+  </div>
+  {% endblock %} {% endblock %}
