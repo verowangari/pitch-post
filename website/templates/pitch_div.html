@@ -76,7 +76,7 @@
       <small>View {{pitch.comments|length}} Comments</small>
     </a>
     {% else %}
-    <small class="text-muted">No Comments</small>
+    <small class="text-muted" style="background-color: white;">No Comments</small>
     {% endif %}
   </p>
   
@@ -85,11 +85,11 @@
 <form class="input-group mb-3"method="POST"action="/create-comment/{{pitch.id}}">
 <input
   type="text" id="text"name="text"class="form-control"placeholder="Comment something!"/>
-<button type="submit" class="btn btn-primary">Comment</button>
+<button type="submit" class="btn " style="background-color:#41D9FC;">Comment</button>
 </form>
 <!-- form -->
 </div>
-<div class="card-footer text-muted">
+<div class="card-footer text-muted" style="background-color: white;">
     {{pitch.date_created}}
 </div>
 </div>
@@ -98,7 +98,7 @@
  {% block footer %}
 <div align="center">
   <h3> Click the button below to create a new pitch</h3>
-<a href="/create-pitch">  <button class="btn btn-primary btn-lg" type="button"> Create a Pitch</button>  </a>
+<a href="/create-pitch">  <button class="btn  btn-lg" style="background-color:#41D9FC;" type="button"> Create a Pitch</button>  </a>
 </div>
 {% endblock %}
  

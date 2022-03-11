@@ -1,0 +1,28 @@
+
+*{
+    text-decoration: none;
+    color: white;
+}
+body{
+ 
+    
+    background-image: url( ../images/elevator.jpg );
+    background-size: cover;
+    }
+    h1,h3{
+        color: white;
+    }
+    button{
+        background-color: #41D9FC;
+    }
+    .card{
+background-color:#98675D;
+color: white;
+    }
+    a{
+        color: white;
+        font-weight: 500;
+    }
+    .card-footer{
+        color: white;
+    }
