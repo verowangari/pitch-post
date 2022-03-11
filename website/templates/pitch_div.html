@@ -16,11 +16,11 @@
             onclick="like({{pitch.id}})"
           ></i>
           {% else %}
-          <i
+          <a href=""><i
             class="far fa-thumbs-up"
             id="like-button-{{pitch.id}}"
             onclick="like({{pitch.id}})"
-          ></i>
+          ></i> </a>
           {% endif %} {% if user.id == pitch.author %}
           <div class="btn-group">
             <button
