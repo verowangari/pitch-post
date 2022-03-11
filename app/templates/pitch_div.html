@@ -47,20 +47,18 @@
         <div class="d-flex justify-content-between align-items-center">
           <div><a href="/pitches/{{comment.user.username}}">{{comment.user.username}}</a>: {{comment.text}}</div>
           <div>
-            <small class="text-muted"> {{comment.date_created}}</small>
+            <small class="text-muted" style="background-color: white;"> {{comment.date_created}}</small>
             {% if user.id == comment.author or user.id == pitch.author %}
             <div class="btn-group"> 
               <button
                 type="button"
-                class="btn btn-sm btn-primary dropdown-toggle"
+                class="btn btn-sm  dropdown-toggle" style="background-color: #41D9FC;"
                 data-bs-toggle="dropdown" ></button>
               <ul class="dropdown-menu">
                 <li>
                   <a
                     href="/delete-comment/{{comment.id}}"
-                    class="dropdown-item"
-                    >Delete</a
-                  >
+                    class="dropdown-item" style="background-color: #41D9FC;" >Delete</a>
                 </li>
               </ul>
             </div>
