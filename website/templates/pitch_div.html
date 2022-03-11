@@ -3,7 +3,7 @@
 
 {% block content %} 
 
-<h1 align="center" > {%  block header %} Pitches {% endblock %} </h1> 
+<h1 align="center" > {%  block header %} General  Pitches {% endblock %} </h1> 
 <div id="pitches"> 
 {% for pitch in pitches %}
 <div class="card border-dark">
@@ -97,6 +97,7 @@
 </div>
  {% block footer %}
 <div align="center">
+  <h3> Click the button below to create a new pitch</h3>
 <a href="/create-pitch">  <button class="btn btn-primary btn-lg" type="button"> Create a Pitch</button>  </a>
 </div>
 {% endblock %}
