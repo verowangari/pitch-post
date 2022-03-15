@@ -34,7 +34,7 @@ def create_app(config_name):
 
     from .models import User,Like,Pitch,Comment
 
-    create_database(app)
+    # create_database(app)
 
     login_manager = LoginManager()
     login_manager.login_view = "auth.login"
@@ -47,7 +47,7 @@ def create_app(config_name):
     return app
 
 
-def create_database(app):
-    if not path.exists("app/" + elevator):
-        db.create_all(app=app)
-        print("Created database!")
+# def create_database(app):
+#     if not path.exists("app/" + elevator):
+#         db.create_all(app=app)
+#         print("Created database!")
