@@ -3,7 +3,8 @@ import os
 class Config:
 
 
-    SECRET_KEY =os.environ.get('SECRET_KEY')
+    # SECRET_KEY =os.environ.get('SECRET_KEY')
+    SECRET_KEY='helloworld'
     SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://vero:1234567890@localhost:5432/elevator"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     @staticmethod
