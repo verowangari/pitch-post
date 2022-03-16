@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_login import LoginManager
 from config import config_options
+from os import path
 
 
 
@@ -47,7 +48,7 @@ def create_app(config_name):
     return app
 
 
-# def create_database(app):
-#     if not path.exists("app/" + elevator):
-#         db.create_all(app=app)
-#         print("Created database!")
+def create_database(app):
+    if not path.exists("app/" + elevator):
+        db.create_all(app=app)
+       
