@@ -7,7 +7,7 @@ from  flask_migrate import Migrate, MigrateCommand
 from app.models import Pitch,User,Comment,Like
 
 # Creating app instance
-app = create_app('development')
+app = create_app('production')
 migrate = Migrate(app,db)
 
 
